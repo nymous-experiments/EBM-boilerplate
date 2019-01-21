@@ -37,10 +37,12 @@ script:
    # Build Docker
   - docker build -t ebm2018/$REPO_NAME:latest .
   - |
-    if [[ $TRAVIS_BRANCH == 'master' ]];
+    echo "$TRAVIS_BRANCH"
+    echo "$TRAVIS_PULL_REQUEST"
+    if [[ $TRAVIS_BRANCH == 'master' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]];
       then
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push ebm2018/$REPO_NAME:latest
+        docker push "ebm2018/$REPO_NAME:latest"
     fi;
 
 deploy:
